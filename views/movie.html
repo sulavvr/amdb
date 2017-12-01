@@ -1,0 +1,73 @@
+{{ template "header.html" . }}
+<br/>
+<div class="row">
+    <div class="col-sm-3">
+        <img class="img-thumbnail" src="https://image.tmdb.org/t/p/w500{{ .movie.GetInfo.poster.Value }}" />
+    </div>
+    <div class="col-sm-9">
+        <h1 class="float-left">{{ .movie.GetInfo.title }} </h1>
+        <h3 class="float-right"><i class="fa fa-star"></i> {{ .movie.GetInfo.rating }} <small>({{ .movie.GetInfo.votes }})</small></h3>
+        <div class="clearfix"></div>
+        <p class="font-weight-bold font-italic">
+            {{ if .movie.GetInfo.tagline.Valid }}
+                {{ .movie.GetInfo.tagline.String }}
+            {{ else }}
+                No tagline provided.
+            {{ end }}
+        </p>
+        <p class="text-muted" style="font-size: 0.9em">
+            <i class="fa fa-clock-o"></i> {{ .movie.GetInfo.runtime }} mins | {{ .movie.GetInfo.genre }} | {{ .movie.GetInfo.production }} ({{ .movie.GetInfo.country }}) | {{ .movie.GetInfo.releaseDate }} | <i class="fa fa-globe"></i> {{ .movie.GetInfo.language }}
+        </p>
+        <p class="lead">
+            {{ if .movie.GetInfo.overview.Valid }}
+                {{ .movie.GetInfo.overview.String }}
+            {{ else }}
+                No overview provided.
+            {{ end }}
+        </p>
+        <div class="row">
+            <div class="col-md-6">
+                <dl class="row">
+                    <dt class="col-sm-3">Budget</dt>
+                    <dd class="col-sm-9"><h5 class="text-info">${{ .movie.GetInfo.budget }}</h5></dd>
+                    <dt class="col-sm-3">Gross</dt>
+                    <dd class="col-sm-9"><h5 class="text-info">${{ .movie.GetInfo.revenue }}</h5></dd>
+                </dl>
+            </div>
+            <div class="col-md-6">
+                <p class="text-success text-right mb-0" style="font-size:0.9em">Popularity</p>
+                <h4 class="text-success text-right"><i class="fa fa-line-chart"></i> {{ .movie.GetInfo.popularity }}</h4>
+
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-md-12 mt-4">
+        <h5>Cast</h5>
+        <table class="table table-sm table-striped">
+            {{ range .movie.GetInfo.casts }}
+                <tr>
+                    <td class="cast_image">
+                        {{ if eq .GetInfo.profile "None" }}
+                            <img class="img-thumbnail" src="https://placeimg.com/280/418/any?{{ .GetInfo.id }}" />
+                        {{ else }}
+                            <img class="img-thumbnail" src="https://image.tmdb.org/t/p/w500{{ .GetInfo.profile }}" />
+                        {{ end }}
+                    </td>
+                    <td>
+                        <strong>{{ .GetInfo.name }}</strong>
+                    </td>
+                    <td>
+                        {{ .GetInfo.character }}
+                    </td>
+                </tr>
+            {{ end }}
+        </table>
+        <div class="clearfix"></div>
+        <hr/>
+        <div class="row">
+            <a href="/movies/">Back to all movies</a>
+        </div>
+    </div>
+</div>
+{{ template "footer.html" . }}

@@ -1,0 +1,39 @@
+{{ template "header.html" . }}
+    <br/>
+    <div class="row">
+        <hr/>
+        {{ range .movies }}
+            <div class="col-2 d-flex align-items-stretch pl-1 pr-1">
+                <div class="card mb-2">
+                    {{ if .GetInfo.poster.Valid }}
+                        <img class="card-img-top" src="https://image.tmdb.org/t/p/w500{{ .GetInfo.poster.Value }}" />
+                    {{ else }}
+                        <img class="card-img-top" src="https://placeimg.com/280/418/any?{{ .GetInfo.id }}" />
+                    {{ end }}
+                    <div class="card-body">
+                        <a href="/movie/{{ .GetInfo.id }}"><h4 class="card-title">{{ .GetInfo.title }}</h4></a>
+                        <p class="card-text">{{ .GetInfo.tagline.Value }}</p>
+                        <p class="card-text font-italic">
+                            <a href="/genre/{{ .GetInfo.genreId }}" class="badge badge-info">{{ .GetInfo.genre }}</a>
+                        </p>
+                        <p class="card-text"><i class="fa fa-star"></i> {{ .GetInfo.rating }} ({{ .GetInfo.votes }})</p>
+                    </div>
+                    <div class="card-footer">
+                        <p class="font-weight-bold"><i class="fa fa-clock-o" aria-hidden="true"></i> {{ .GetInfo.runtime }} mins</p>
+                    </div>
+                </div>
+            </div>
+        {{ end }}
+        <hr />
+    </div>
+    <div class="clearfix"></div>
+    <hr/>
+    <nav class="text-center">
+        <ul class="pagination">
+            {{ range .pagination }}
+                {{ . }}
+            {{ end }}
+        </ul>
+    </nav>
+{{ template "footer.html" . }}
+

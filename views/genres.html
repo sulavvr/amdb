@@ -1,0 +1,14 @@
+{{ template "header.html" . }}
+    <br/>
+    <div class="row">
+        <h3>Genres</h3>
+        <div class="row">
+            {{ range .genres }}
+                <div class="col-6">
+                    <a href="/genre/{{ .GetInfo.id }}">{{ .GetInfo.name }}</a>
+                </div>
+            {{ end }}
+        </div>
+    </div>
+{{ template "footer.html" . }}
+
